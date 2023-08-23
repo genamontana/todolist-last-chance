@@ -14,7 +14,6 @@ function App() {
         {id: 3, title: 'Yo', isDone: false}
     ]
 
-
     return (
         <div className="App">
             <TodoList title={'What to learn'} tasks={tasks1}/>
