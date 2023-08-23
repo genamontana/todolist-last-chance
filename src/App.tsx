@@ -39,6 +39,9 @@ function App() {
         setTasks([task, ...tasks])
     }
 
+    const changeTaskStatus = () => {
+    }
+
     return (
         <div className="App">
             <TodoList title={'What to learn'}
