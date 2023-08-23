@@ -6,7 +6,6 @@ type TasksType = {
     title: string
     isDone: boolean
 }
-
 type TodoListType = {
     title: string
     tasks: TasksType[]
