@@ -36,7 +36,6 @@ function App() {
         ]
     })
 
-
     const removeTask = (id: string, todoListId: string) => {
         let todoListTasks = tasks[todoListId]
         tasks[todoListId] = todoListTasks.filter(task => task.id !== id)
