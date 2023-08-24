@@ -94,7 +94,6 @@ function App() {
             todoList.title = newTitle
             setTodoLists([...todoLists])
         }
-
     }
 
     return (
