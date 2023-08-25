@@ -7,7 +7,7 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from '@mui/icons-material';
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
-type TodolistsType = {
+export type TodolistsType = {
     id: string
     title: string
     filter: FilterValuesType
@@ -19,12 +19,6 @@ type TasksStateType = {
 function App() {
     let todolistID1 = v1()
     let todolistID2 = v1()
-
-    let [todoLists, setTodoLists] = useState<TodolistsType[]>(
-        [
-            {id: todolistID1, title: 'What to learn', filter: 'all'},
-            {id: todolistID2, title: 'What to buy', filter: 'all'},
-        ])
 
     let [tasks, setTasks] = useState<TasksStateType>({
         [todolistID1]: [
@@ -44,22 +38,12 @@ function App() {
         tasks[todoListId] = todoListTasks.filter(task => task.id !== id)
         setTasks({...tasks})
     }
-
-    const changeFilter = (value: FilterValuesType, todoListId: string) => {
-        let todoList = todoLists.find(tl => tl.id === todoListId)
-        if (todoList) {
-            todoList.filter = value
-            setTodoLists([...todoLists])
-        }
-    }
-
     const addTask = (title: string, todoListId: string) => {
         let task = {id: v1(), title: title, isDone: false}
         let todoListTasks = tasks[todoListId]
         tasks[todoListId] = [task, ...todoListTasks]
         setTasks({...tasks})
     }
-
     const changeTaskStatus = (id: string, isDone: boolean, todoListId: string) => {
         let todoListTasks = tasks[todoListId]
         let task = todoListTasks.find(t => t.id === id)
@@ -68,20 +52,6 @@ function App() {
             setTasks({...tasks})
         }
     }
-
-    const removeTodoList = (id: string) => {
-        setTodoLists(todoLists.filter(tl => tl.id !== id))
-        delete tasks[id]
-        setTasks({...tasks})
-    }
-
-    const addTodoList = (title: string) => {
-        let newTodoListId = v1()
-        let newTodoList: TodolistsType = {id: newTodoListId, title, filter: 'all'}
-        setTodoLists([newTodoList, ...todoLists])
-        setTasks({...tasks, [newTodoListId]: []})
-    }
-
     const changeTaskTitle = (id: string, newTitle: string, todoListId: string) => {
         let todoListTasks = tasks[todoListId]
         let task = todoListTasks.find(t => t.id === id)
@@ -90,6 +60,24 @@ function App() {
             setTasks({...tasks})
         }
     }
+
+    let [todoLists, setTodoLists] = useState<TodolistsType[]>([
+        {id: todolistID1, title: 'What to learn', filter: 'all'},
+        {id: todolistID2, title: 'What to buy', filter: 'all'},
+    ])
+
+    const changeFilter = (value: FilterValuesType, todoListId: string) => {
+        let todoList = todoLists.find(tl => tl.id === todoListId)
+        if (todoList) {
+            todoList.filter = value
+            setTodoLists([...todoLists])
+        }
+    }
+    const removeTodoList = (id: string) => {
+        setTodoLists(todoLists.filter(tl => tl.id !== id))
+        delete tasks[id]
+        setTasks({...tasks})
+    }
     const changeTodoListTitle = (todoListId: string, newTitle: string) => {
         let todoList = todoLists.find(tl => tl.id === todoListId)
         if (todoList) {
@@ -97,6 +85,15 @@ function App() {
             setTodoLists([...todoLists])
         }
     }
+    const addTodoList = (title: string) => {
+        let newTodoListId = v1()
+        let newTodoList: TodolistsType = {id: newTodoListId, title, filter: 'all'}
+        setTodoLists([newTodoList, ...todoLists])
+        setTasks({...tasks, [newTodoListId]: []})
+    }
+
+
+
 
     return (
         <div className="App">
@@ -126,7 +123,7 @@ function App() {
                         if (tl.filter === 'completed') {
                             tasksFourTodoList = allTodoListTasks.filter(task => task.isDone)
                         }
-                        return <Grid item>
+                        return <Grid item key={tl.id}>
                             <Paper style={{padding: '10px'}}>
                                 <TodoList key={tl.id}
                                           id={tl.id}
