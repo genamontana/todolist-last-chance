@@ -69,6 +69,7 @@ function AppWithReducers() {
 
     return (
         <div className="App">
+            {/*
             <AppBar position={'static'}>
                 <Toolbar>
                     <IconButton edge={'start'} color={'inherit'} aria-label={'menu'}>
@@ -114,6 +115,7 @@ function AppWithReducers() {
                     })}
                 </Grid>
             </Container>
+            */}
         </div>
     );
 }
