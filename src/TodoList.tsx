@@ -40,7 +40,6 @@ export function TodoList(props: TodoListType) {
         props.changeFilter('completed', props.id)
     }
 
-
     return (
         <div>
             <h3><EditableSpan title={props.title} onChange={changeTodoListTitle}/>
