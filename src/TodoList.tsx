@@ -3,6 +3,7 @@ import {FilterValuesType} from './App';
 import {EditableSpan} from './EditableSpan';
 import {Button, Checkbox, IconButton} from '@mui/material';
 import {Delete} from '@mui/icons-material';
+import {AddItemForm} from './AddItemForm';
 
 export type TasksType = {
     id: string
@@ -24,6 +25,9 @@ type TodoListType = {
 }
 
 export function TodoList(props: TodoListType) {
+    const addTask = (title: string) => {
+        props.addTask(title, props.id)
+    }
     const removeTodolist = () => {
         props.removeTodoList(props.id)
     }
@@ -47,6 +51,7 @@ export function TodoList(props: TodoListType) {
                     <Delete/>
                 </IconButton>
             </h3>
+            <AddItemForm addItem={addTask}/>
             <div>
                 {props.tasks.map((task) => {
                     const onClickHandler = () => props.removeTask(task.id, props.id)

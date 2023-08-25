@@ -27,12 +27,14 @@ export type ChangeTodoListFilterActionType = {
     filter: FilterValuesType
 }
 
-export const todolistsReducer = (state: TodolistsType[], action: ActionsType): TodolistsType[] => {
+const initialState: TodolistsType[] = []
+
+export const todolistsReducer = (state: TodolistsType[] = initialState, action: ActionsType): TodolistsType[] => {
     switch (action.type) {
         case 'REMOVE-TODOLIST':
             return state.filter(tl => tl.id !== action.id)
         case 'ADD-TODOLIST':
-            return [...state, {id: action.todolistId, title: action.title, filter: 'all'}]
+            return [{id: action.todolistId, title: action.title, filter: 'all'}, ...state ]
         case 'CHANGE-TODOLIST-TITLE': {
             const todoList = state.find(tl => tl.id === action.id)
             if (todoList) {
@@ -48,19 +50,19 @@ export const todolistsReducer = (state: TodolistsType[], action: ActionsType): T
             return [...state]
         }
         default:
-            throw new Error('I don\'t understand this type')
+            return state
     }
 }
 
-export const RemoveTodoListAC = (todolistId: string): RemoveTodoListActionType => {
+export const removeTodoListAC = (todolistId: string): RemoveTodoListActionType => {
     return {type: 'REMOVE-TODOLIST' as const, id: todolistId}
 }
-export const AddTodoListAC = (title: string): AddTodoListActionType => {
+export const addTodoListAC = (title: string): AddTodoListActionType => {
     return {type: 'ADD-TODOLIST' as const, title, todolistId: v1()}
 }
-export const ChangeTodoListTitleAC = (todolistId: string, title: string): ChangeTodoListTitleActionType => {
+export const changeTodoListTitleAC = (todolistId: string, title: string): ChangeTodoListTitleActionType => {
     return {type: 'CHANGE-TODOLIST-TITLE' as const, id: todolistId, title}
 }
-export const ChangeTodoListFilterAC = (todolistId: string, filter: FilterValuesType): ChangeTodoListFilterActionType => {
+export const changeTodoListFilterAC = (todolistId: string, filter: FilterValuesType): ChangeTodoListFilterActionType => {
     return {type: 'CHANGE-TODOLIST-FILTER' as const, id: todolistId, filter}
 }
