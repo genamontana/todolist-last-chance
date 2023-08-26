@@ -26,7 +26,6 @@ export const EditableSpan = React.memo ((props: EditableSpanType) => {
             setEditMode(false)
         }
     }
-
     return (
         editMode
             ? <TextField variant={'outlined'}
