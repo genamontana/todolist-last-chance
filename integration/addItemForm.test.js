@@ -1,0 +1,11 @@
+describe('addItemForm', () => {
+    it('base example, visually looks correct', async () => {
+        await page.goto('http://localhost:9009/iframe.html?id=todolist-additemform--add-item-form-base-example&viewMode=story',
+            {waitUntil: "networkidle2"});
+
+        const image = await page.screenshot();
+
+        // API from jest-image-snapshot
+        expect(image).toMatchImageSnapshot();
+    });
+});

@@ -3,6 +3,7 @@ import {IconButton, TextField} from '@mui/material';
 
 export type AddItemFormType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
 
