@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import {TodoList} from './TodoList';
 import {AddItemForm} from './AddItemForm';
@@ -9,6 +9,7 @@ import {
     addTodoListAC,
     changeTodoListFilterAC,
     changeTodoListTitleAC,
+    fetchTodoListsThunk,
     removeTodoListAC
 } from './state/todolists-reducer';
 import {useDispatch, useSelector} from 'react-redux';
@@ -18,33 +19,38 @@ import {TasksStateType, TodolistsType} from './App';
 export type FilterValuesType = 'all' | 'active' | 'completed'
 
 function AppWithRedux() {
+
+    useEffect(() => {
+        dispatch(fetchTodoListsThunk)
+    },[])
+
     const todoLists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
     const removeTask = useCallback((id: string, todoListId: string) => {
         dispatch(removeTaskAC(id, todoListId))
-    },[])
+    }, [])
     const addTask = useCallback((title: string, todoListId: string) => {
         dispatch(addTaskAC(title, todoListId))
     }, [])
     const changeTaskStatus = useCallback((id: string, isDone: boolean, todoListId: string) => {
         dispatch(changeTaskStatusAC(id, isDone, todoListId))
-    },[])
+    }, [])
     const changeTaskTitle = useCallback((id: string, newTitle: string, todoListId: string) => {
         dispatch(changeTaskTitleAC(id, newTitle, todoListId))
-    },[])
+    }, [])
 
 
     const changeFilter = useCallback((value: FilterValuesType, todoListId: string) => {
         dispatch(changeTodoListFilterAC(todoListId, value))
-    },[])
+    }, [])
     const removeTodoList = useCallback((id: string) => {
         dispatch(removeTodoListAC(id))
     }, [])
     const changeTodoListTitle = useCallback((todoListId: string, newTitle: string) => {
         dispatch(changeTodoListTitleAC(todoListId, newTitle))
-    },[])
+    }, [])
     const addTodoList = useCallback((title: string) => {
         dispatch(addTodoListAC(title))
     }, [])

@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import './App.css';
-import {TasksType, TodoList} from './TodoList';
+import {TasksType} from './TodoList';
 import {v1} from 'uuid';
-import {AddItemForm} from './AddItemForm';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
-import {Menu} from '@mui/icons-material';
+
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
 export type TodolistsType = {
@@ -91,8 +89,6 @@ function App() {
         setTodoLists([newTodoList, ...todoLists])
         setTasks({...tasks, [newTodoListId]: []})
     }
-
-
 
 
     return (
